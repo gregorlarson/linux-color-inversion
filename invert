@@ -1,0 +1,15 @@
+#!/bin/sh
+p=`readlink -f "$0"`    # program
+d="${p%/*}"             # directory
+cd "$d"                 # chdir to program directory
+
+i='id!=0'               # default inversion
+
+[ "$1" ] && case "$1" in
+firefox)        i='g:e:Firefox'
+        ;;
+*)              i="$1"
+esac
+
+exec compton --backend glx --glx-fshader-win "$(cat matrix_thirds.glsl)" --invert-color-include "$i"
+# vim: et
